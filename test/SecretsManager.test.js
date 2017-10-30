@@ -36,4 +36,64 @@ describe("SecretsManager", function () {
                 done(err);
             });
     });
+
+    it('catches error from S3', function (done) {
+        mock('aws-sdk', { S3: function() {
+            return {
+                getObject: function (params, callback) {
+                    expect(params.Bucket).toBe('mybucket');
+                    expect(params.Key).toBe('mysecret');
+
+                    return callback(new Error("some-error"));
+                }
+            }
+        }, KMS: function() {}});
+
+        const SecretsManager = require("../lib/SecretsManager");
+        const subject = new SecretsManager();
+
+        subject.resolve("bucket/secret")
+            .then(function (ciphertext) {
+                done("Expected error to have happened");
+            })
+            .catch(function (err) {
+                expect(err.message).toBe('some-error');
+                done();
+            });
+    });
+
+    it('catches error from KMS', function (done) {
+        const fakeCiphertextBuffer = new Buffer("secret-string");
+
+        mock('aws-sdk', { S3: function() {
+            return {
+                getObject: function (params, callback) {
+                    expect(params.Bucket).toBe('mybucket');
+                    expect(params.Key).toBe('mysecret');
+
+                    return callback(undefined, {Body: fakeCiphertextBuffer});
+                }
+            }
+        }, KMS: function() {
+            return {
+                decrypt: function (params, callback) {
+                    expect(params.CiphertextBlob).toBe(fakeCiphertextBuffer);
+
+                    return callback(new Error('some-kms-error'));
+                }
+            }
+        }});
+
+        const SecretsManager = require("../lib/SecretsManager");
+        const subject = new SecretsManager();
+
+        subject.resolve("bucket/secret")
+            .then(function (ciphertext) {
+                done("Expected error to have happened");
+            })
+            .catch(function (err) {
+                expect(err.message).toBe('some-kms-error');
+                done();
+            });
+    });
 });
