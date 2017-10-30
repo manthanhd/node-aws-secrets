@@ -1,0 +1,25 @@
+{
+  "name": "node-aws-secrets",
+  "version": "1.0.0",
+  "description": "Manage your AWS secrets on S3 using KMS",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/manthanhd/node-aws-secrets.git"
+  },
+  "keywords": ["aws", "secrets", "password", "management", "passwords", "s3", "kms", "encrypted", "encryption"],
+  "author": "Manthan Dave <manthanhd@live.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/manthanhd/node-aws-secrets/issues"
+  },
+  "homepage": "https://github.com/manthanhd/node-aws-secrets#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "expect": "^21.2.1",
+    "mocha": "^4.0.1"
+  }
+}
