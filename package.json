@@ -10,16 +10,29 @@
     "type": "git",
     "url": "git+https://github.com/manthanhd/node-aws-secrets.git"
   },
-  "keywords": ["aws", "secrets", "password", "management", "passwords", "s3", "kms", "encrypted", "encryption"],
+  "keywords": [
+    "aws",
+    "secrets",
+    "password",
+    "management",
+    "passwords",
+    "s3",
+    "kms",
+    "encrypted",
+    "encryption"
+  ],
   "author": "Manthan Dave <manthanhd@live.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/manthanhd/node-aws-secrets/issues"
   },
   "homepage": "https://github.com/manthanhd/node-aws-secrets#readme",
-  "dependencies": {},
+  "dependencies": {
+    "aws-sdk": "^2.141.0"
+  },
   "devDependencies": {
     "expect": "^21.2.1",
-    "mocha": "^4.0.1"
+    "mocha": "^4.0.1",
+    "mock-require": "^2.0.2"
   }
 }
