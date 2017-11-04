@@ -2,14 +2,14 @@
 
 Allows download and upload of secrets from AWS S3 and KMS
 
-[![npm version](https://badge.fury.io/js/aws-secrets.svg)](https://badge.fury.io/js/aws-secrets) [![Build Status](https://travis-ci.org/manthanhd/node-aws-secrets.svg?branch=master)](https://travis-ci.org/manthanhd/node-aws-secrets) [![Coverage Status](https://coveralls.io/repos/github/manthanhd/node-aws-secrets/badge.svg?branch=master)](https://coveralls.io/github/manthanhd/node-aws-secrets?branch=master)
+[![npm version](https://badge.fury.io/js/aws-secrets-manager.svg)](https://badge.fury.io/js/aws-secrets-manager) [![Build Status](https://travis-ci.org/manthanhd/node-aws-secrets.svg?branch=master)](https://travis-ci.org/manthanhd/node-aws-secrets) [![Coverage Status](https://coveralls.io/repos/github/manthanhd/node-aws-secrets/badge.svg?branch=master)](https://coveralls.io/github/manthanhd/node-aws-secrets?branch=master)
 
 ## Usage
 
 Upload secret to S3 via KMS encryption
 
 ```javascript
-const SecretsManager = require("aws-secrets");
+const SecretsManager = require("aws-secrets-manager");
 const secretsManager = new SecretsManager();
 
 var options = {
@@ -32,7 +32,7 @@ secretsManager.upload(options)
 Access encrypted secret stored on S3
 
 ```javascript
-const SecretsManager = require("aws-secrets");
+const SecretsManager = require("aws-secrets-manager");
 const secretsManager = new SecretsManager();
 
 secretsManager.resolve("s3://mybucket/myfolder/mysecret")

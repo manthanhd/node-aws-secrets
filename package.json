@@ -1,5 +1,5 @@
 {
-  "name": "aws-secrets",
+  "name": "aws-secrets-manager",
   "version": "1.0.0",
   "description": "Manage your AWS secrets on S3 using KMS",
   "main": "index.js",
