@@ -9,7 +9,7 @@ Allows download and upload of secrets from AWS S3 and KMS
 Upload secret to S3 via KMS encryption
 
 ```javascript
-const SecretsManager = require("../lib/SecretsManager");
+const SecretsManager = require("node-aws-secrets");
 const secretsManager = new SecretsManager();
 
 var options = {
@@ -32,7 +32,7 @@ secretsManager.upload(options)
 Access encrypted secret stored on S3
 
 ```javascript
-const SecretsManager = require("../lib/SecretsManager");
+const SecretsManager = require("node-aws-secrets");
 const secretsManager = new SecretsManager();
 
 secretsManager.resolve("s3://mybucket/myfolder/mysecret")
