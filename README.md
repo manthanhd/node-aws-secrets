@@ -6,6 +6,29 @@ Allows download and upload of secrets from AWS S3 and KMS
 
 ## Usage
 
+Upload secret to S3 via KMS encryption
+
+```javascript
+const SecretsManager = require("../lib/SecretsManager");
+const secretsManager = new SecretsManager();
+
+var options = {
+    secret: 'my-plaintext-secret',
+    s3Location: 's3://mybucket/mysecret',
+    kmsKeyId: 'my-kms-key-id/arn/alias'
+};
+secretsManager.upload(options)
+    .then(function (ciphertextBuffer) {
+        // Upload and encryption was successful
+        // ciphertextBuffer as Buffer object
+        console.log(ciphertextBuffer.toString());
+    }).catch(function (err) {
+        // If things went wrong
+        // err is Error object
+        console.error(err);
+    });
+```
+
 Access encrypted secret stored on S3
 
 ```javascript
