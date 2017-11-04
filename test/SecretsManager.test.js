@@ -111,4 +111,28 @@ describe("SecretsManager", function () {
                 done();
             });
     });
+
+    it('passes configuration to s3 and kms', function (done) {
+        var expectations = 0;
+        mock('aws-sdk', { S3: function(config) {
+            expect(config).toBeDefined();
+            expect(config.region).toBe('eu-west-1');
+            expectations++;
+            return {
+
+            }
+        }, KMS: function(config) {
+            expect(config).toBeDefined();
+            expect(config.region).toBe('eu-west-2');
+            expectations++;
+            return {
+
+            }
+        }});
+
+        const SecretsManager = require("../lib/SecretsManager");
+        const subject = new SecretsManager({s3: {region: 'eu-west-1'}, kms: {region: 'eu-west-2'}});
+        expect(expectations).toBe(2);
+        done();
+    });
 });
