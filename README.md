@@ -47,3 +47,9 @@ secretsManager.resolve("s3://mybucket/myfolder/mysecret")
         console.error(err);
     });
 ```
+
+## Contact
+
+If you have a question/idea/suggestion, I'd like to encourage you to raise an issue with relevant label. I will try to get back to you as soon as I can.
+
+If you are able, I highly encourage people to communicate their ideas over a pull request with code as it is the best and most efficient way to effectively knowledge transfer. 
