@@ -1,6 +1,6 @@
 {
-  "name": "node-aws-secrets",
-  "version": "1.0.1",
+  "name": "aws-secrets",
+  "version": "1.0.0",
   "description": "Manage your AWS secrets on S3 using KMS",
   "main": "index.js",
   "scripts": {
