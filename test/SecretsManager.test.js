@@ -26,7 +26,7 @@ describe("SecretsManager", function () {
         const SecretsManager = require("../lib/SecretsManager");
         const subject = new SecretsManager();
 
-        subject.resolve("bucket/secret")
+        subject.resolve("s3://mybucket/mysecret")
             .then(function (ciphertext) {
                 expect(ciphertext).toBe('some-plaintext-key');
                 done();
@@ -52,7 +52,7 @@ describe("SecretsManager", function () {
         const SecretsManager = require("../lib/SecretsManager");
         const subject = new SecretsManager();
 
-        subject.resolve("bucket/secret")
+        subject.resolve("s3://mybucket/mysecret")
             .then(function (ciphertext) {
                 done("Expected error to have happened");
             })
@@ -87,7 +87,7 @@ describe("SecretsManager", function () {
         const SecretsManager = require("../lib/SecretsManager");
         const subject = new SecretsManager();
 
-        subject.resolve("bucket/secret")
+        subject.resolve("s3://mybucket/mysecret")
             .then(function (ciphertext) {
                 done("Expected error to have happened");
             })
