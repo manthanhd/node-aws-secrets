@@ -2,6 +2,30 @@ describe("SecretsManager", function () {
     const expect = require("expect");
     const mock = require('mock-require');
 
+    describe('<init>', function() {
+        it('passes configuration to s3 and kms', function (done) {
+            var expectations = 0;
+            mock('aws-sdk', {
+                S3: function (config) {
+                    expect(config).toBeDefined();
+                    expect(config.region).toBe('eu-west-1');
+                    expectations++;
+                    return {}
+                }, KMS: function (config) {
+                    expect(config).toBeDefined();
+                    expect(config.region).toBe('eu-west-2');
+                    expectations++;
+                    return {}
+                }
+            });
+
+            const SecretsManager = require("../lib/SecretsManager");
+            const subject = new SecretsManager({s3: {region: 'eu-west-1'}, kms: {region: 'eu-west-2'}});
+            expect(expectations).toBe(2);
+            done();
+        });
+    });
+
     describe('resolve', function () {
         it('resolves secrets given S3 URI', function (done) {
             const fakeCiphertextBuffer = new Buffer("secret-string");
@@ -119,29 +143,6 @@ describe("SecretsManager", function () {
                     done();
                 });
         });
-
-        it('passes configuration to s3 and kms', function (done) {
-            var expectations = 0;
-            mock('aws-sdk', {
-                S3: function (config) {
-                    expect(config).toBeDefined();
-                    expect(config.region).toBe('eu-west-1');
-                    expectations++;
-                    return {}
-                }, KMS: function (config) {
-                    expect(config).toBeDefined();
-                    expect(config.region).toBe('eu-west-2');
-                    expectations++;
-                    return {}
-                }
-            });
-
-            const SecretsManager = require("../lib/SecretsManager");
-            const subject = new SecretsManager({s3: {region: 'eu-west-1'}, kms: {region: 'eu-west-2'}});
-            expect(expectations).toBe(2);
-            done();
-        });
-
     });
 
     describe('upload', function () {
@@ -264,6 +265,26 @@ describe("SecretsManager", function () {
                     done('should have failed at S3');
                 }).catch(function (err) {
                     expect(err.message).toBe('fake s3 error');
+                    done();
+                });
+        });
+
+        it('throws error when given uri is not regexp', function (done) {
+            const SecretsManager = require("../lib/SecretsManager");
+            const subject = new SecretsManager();
+
+            var testOptions = {
+                secret: 'my-plaintext-secret',
+                s3Location: 'totally not s3 uri',
+                kmsKeyId: 'my-key-id'
+            };
+            subject.upload(testOptions)
+                .then(function (ciphertext) {
+                    done("Expected error to have happened");
+                })
+                .catch(function (err) {
+                    expect(err.message).toBe('uri is not s3 uri');
+                    expect(err.code).toBe('URI_VALIDATION_ERROR');
                     done();
                 });
         });
