@@ -96,4 +96,19 @@ describe("SecretsManager", function () {
                 done();
             });
     });
+
+    it('throws error when given uri is not regexp', function (done) {
+        const SecretsManager = require("../lib/SecretsManager");
+        const subject = new SecretsManager();
+
+        subject.resolve("something totally not s3 uri")
+            .then(function (ciphertext) {
+                done("Expected error to have happened");
+            })
+            .catch(function (err) {
+                expect(err.message).toBe('uri is not s3 uri');
+                expect(err.code).toBe('URI_VALIDATION_ERROR');
+                done();
+            });
+    });
 });
