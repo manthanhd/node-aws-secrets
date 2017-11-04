@@ -29,7 +29,7 @@
   },
   "homepage": "https://github.com/manthanhd/node-aws-secrets#readme",
   "dependencies": {
-    "aws-sdk": "^2.141.0"
+    "aws-sdk": "^2.145.0"
   },
   "devDependencies": {
     "expect": "^21.2.1",
