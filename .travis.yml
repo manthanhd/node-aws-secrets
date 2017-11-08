@@ -6,3 +6,12 @@ branches:
   - master
 after_success:
 - npm run coveralls
+deploy:
+  provider: releases
+  api_key:
+    secure: f7zdvg6cXPqPYH1Fv+czvBpmeq8Z/q1wg9PgXCO+x+vHQfMKrBmaAtV1pBpmHgLQb2cTj24XeC1WUwTjWLjmHznwqnQD3R34zZ2NyXEDjG8Atyh2cOvVaDdKtJeKYuCsXOmZEV3UBvFtOEd2bhNJysuw8pQNi0tEe2e5tbqT+XSwOmZjEn/4zEbY1gUZKs4DR60OZjyQJfVT8Q/O1Md8O3TgXuKkpUyTQc38azvtfOItUcCTTqklraofyjtg05G94iLi1DVIDSbOD9GCDUpbR8oB5gfNh0yFhRG9XEGVfRFkg2F4G3A90WyBfLJaq/+pmtOVpaD3GUzYWuy4snnf/mIe9bkLwsQKnpbUevcbMOiSqgqv8D1R+rJ2jRn03EiFFfk8lU0B7aBYt7+HKmjxbhR/SErQoz9kst/J8V/tRH2SWCw8ESY6FQ3AlFNV0GV2hoOWi+WVX77trBZZttuwpMVAfFrYA2tw5wJ2SLs9BG40y4XX2Fe+t//viCSXYhEzTzXnkuWYr3E81SinBvY625yekC8t/Db3GEfnN2GFYvuVwcA51NGcfzIRSOEvX0PPxAirUmqgW250BnJakGf1kVUtJ99GpENzYg+AYuyvaxnTfEq7D/zlIYP0Mb/GbiIk9XyM9Ad52LpGJsvmmhZ9X7pNlWQFZtSThhRnBTWiSpo=
+  file: aws-secrets-manager*.tgz
+  on:
+    repo: manthanhd/node-aws-secrets
+    branch: master
+  skip_cleanup: true

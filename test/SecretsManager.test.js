@@ -26,7 +26,7 @@ describe("SecretsManager", function () {
         });
     });
 
-    describe('resolve', function () {
+    describe('get', function () {
         it('resolves secrets given S3 URI', function (done) {
             const fakeCiphertextBuffer = new Buffer("secret-string");
 
@@ -53,7 +53,7 @@ describe("SecretsManager", function () {
             const SecretsManager = require("../lib/SecretsManager");
             const subject = new SecretsManager();
 
-            subject.resolve("s3://mybucket/mysecret")
+            subject.get("s3://mybucket/mysecret")
                 .then(function (ciphertext) {
                     expect(ciphertext).toBe('some-plaintext-key');
                     done();
@@ -82,7 +82,7 @@ describe("SecretsManager", function () {
             const SecretsManager = require("../lib/SecretsManager");
             const subject = new SecretsManager();
 
-            subject.resolve("s3://mybucket/mysecret")
+            subject.get("s3://mybucket/mysecret")
                 .then(function (ciphertext) {
                     done("Expected error to have happened");
                 })
@@ -119,7 +119,7 @@ describe("SecretsManager", function () {
             const SecretsManager = require("../lib/SecretsManager");
             const subject = new SecretsManager();
 
-            subject.resolve("s3://mybucket/mysecret")
+            subject.get("s3://mybucket/mysecret")
                 .then(function (ciphertext) {
                     done("Expected error to have happened");
                 })
@@ -133,7 +133,7 @@ describe("SecretsManager", function () {
             const SecretsManager = require("../lib/SecretsManager");
             const subject = new SecretsManager();
 
-            subject.resolve("something totally not s3 uri")
+            subject.get("something totally not s3 uri")
                 .then(function (ciphertext) {
                     done("Expected error to have happened");
                 })
@@ -145,7 +145,7 @@ describe("SecretsManager", function () {
         });
     });
 
-    describe('upload', function () {
+    describe('set', function () {
         it('uploads secret by encrypting it with given KMS key', function (done) {
             var encryptedCiphertextBuffer = new Buffer('encrypted-ciphertext');
 
@@ -180,7 +180,7 @@ describe("SecretsManager", function () {
                 s3Location: 's3://mybucket/mysecret',
                 kmsKeyId: 'my-key-id'
             };
-            subject.upload(testOptions)
+            subject.set(testOptions)
                 .then(function (ciphertextBuffer) {
                     expect(ciphertextBuffer).toBe(encryptedCiphertextBuffer);
                     done();
@@ -217,7 +217,7 @@ describe("SecretsManager", function () {
                 s3Location: 's3://mybucket/mysecret',
                 kmsKeyId: 'my-key-id'
             };
-            subject.upload(testOptions)
+            subject.set(testOptions)
                 .then(function (ciphertextBuffer) {
                     done('should have thrown error');
                 }).catch(function (err) {
@@ -260,7 +260,7 @@ describe("SecretsManager", function () {
                 s3Location: 's3://mybucket/mysecret',
                 kmsKeyId: 'my-key-id'
             };
-            subject.upload(testOptions)
+            subject.set(testOptions)
                 .then(function (ciphertextBuffer) {
                     done('should have failed at S3');
                 }).catch(function (err) {
@@ -278,7 +278,7 @@ describe("SecretsManager", function () {
                 s3Location: 'totally not s3 uri',
                 kmsKeyId: 'my-key-id'
             };
-            subject.upload(testOptions)
+            subject.set(testOptions)
                 .then(function (ciphertext) {
                     done("Expected error to have happened");
                 })
@@ -287,6 +287,22 @@ describe("SecretsManager", function () {
                     expect(err.code).toBe('URI_VALIDATION_ERROR');
                     done();
                 });
+        });
+    });
+
+    describe('resolve', function() {
+        it('is aliased to get', function() {
+            const SecretsManager = require("../lib/SecretsManager");
+            const subject = new SecretsManager();
+            expect(subject.resolve).toBe(subject.get);
+        });
+    });
+
+    describe('upload', function() {
+        it('is aliased to set', function() {
+            const SecretsManager = require("../lib/SecretsManager");
+            const subject = new SecretsManager();
+            expect(subject.upload).toBe(subject.set);
         });
     });
 });

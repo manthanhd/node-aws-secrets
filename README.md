@@ -17,7 +17,7 @@ var options = {
     s3Location: 's3://mybucket/mysecret',
     kmsKeyId: 'my-kms-key-id/arn/alias'
 };
-secretsManager.upload(options)
+secretsManager.set(options)
     .then(function (ciphertextBuffer) {
         // Upload and encryption was successful
         // ciphertextBuffer as Buffer object
@@ -35,7 +35,7 @@ Access encrypted secret stored on S3
 const SecretsManager = require("aws-secrets-manager");
 const secretsManager = new SecretsManager();
 
-secretsManager.resolve("s3://mybucket/myfolder/mysecret")
+secretsManager.get("s3://mybucket/myfolder/mysecret")
     .then(function (ciphertext) {
         // Download and decryption was successful
         // ciphertext as Buffer object
