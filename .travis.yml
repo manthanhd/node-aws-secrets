@@ -13,5 +13,5 @@ deploy:
   file: aws-secrets-manager*.tgz
   on:
     repo: manthanhd/node-aws-secrets
-    branch: master
+    tags: true
   skip_cleanup: true
